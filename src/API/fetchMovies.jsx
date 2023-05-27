@@ -3,12 +3,8 @@ import axios from 'axios';
 const KEY = '9658d89d84efdefd667887b926d66a88';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 
-// export const getTrendingMovies = async () => {
-//   return await axios.get(`${BASE_URL}trending/movie/day?api_key=${KEY}&page=1`);
-// };
-
 export const getTrendingMovies = async () => {
-  return await axios.get(`${BASE_URL}trending/all/day?api_key=${KEY}&page=1`);
+  return await axios.get(`${BASE_URL}trending/movie/day?api_key=${KEY}&page=1`);
 };
 
 export const getSearchMovie = async query => {

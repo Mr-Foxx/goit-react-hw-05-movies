@@ -13,7 +13,7 @@ const Home = () => {
         const data = response.data.results;
         setMovies(data);
       } catch (error) {
-        console.log(error.message);
+        throw new Error(error.message);
       }
     };
     getMovies();
