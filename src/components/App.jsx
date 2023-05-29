@@ -1,24 +1,30 @@
-import Home from 'pages/Home/Home';
+import { ThemeProvider } from 'styled-components';
 import MovieDetails from 'pages/MovieDetails/MovieDetails';
-import Movies from 'pages/Movies/Movies';
 import { Route, Routes } from 'react-router-dom';
-import Cast from './Cast/Cast';
 import Layout from './Layout/Layout';
-import Rewiews from './Rewiews/Rewiews';
+import { theme } from '../theme/theme';
+import { lazy } from 'react';
+
+const Home = lazy(() => import('pages/Home/Home'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
+const Cast = lazy(() => import('./Cast/Cast'));
+const Rewiews = lazy(() => import('./Rewiews/Rewiews'));
 
 export const App = () => {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="movies" element={<Movies />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />}>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Rewiews />} />
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="movies" element={<Movies />} />
+            <Route path="/movies/:movieId" element={<MovieDetails />}>
+              <Route path="cast" element={<Cast />} />
+              <Route path="reviews" element={<Rewiews />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </ThemeProvider>
     </>
   );
 };

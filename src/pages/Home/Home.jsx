@@ -2,6 +2,7 @@ import { getTrendingMovies } from 'API/fetchMovies';
 import ListMovies from 'components/ListMovie/LiestMovie';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { H1 } from './Home.styled';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -21,7 +22,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>Trending today</h1>
+      <H1>Trending today</H1>
       <ListMovies movies={movies} />
     </>
   );

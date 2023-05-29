@@ -1,13 +1,26 @@
 import { getMovieById } from 'API/fetchMovies';
+import BackButton from 'components/BackButton/BackButton';
+import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import {
+  Li,
+  P,
+  Ul,
+  Img,
+  Container,
+  ContainerText,
+  NavLinkBtn,
+} from './MovieDetails.styled';
 
 const MovieDetails = () => {
-  <div>MovieDetails</div>;
-
   const { movieId } = useParams();
   const [movie, setMovies] = useState(null);
+
+  const location = useLocation();
+  const defaultBackLink = location.state?.from ?? '/movies';
+  const backLink = useRef(defaultBackLink);
 
   useEffect(() => {
     const getMovie = async movieId => {
@@ -39,43 +52,41 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <div>
-        <img src={img} alt={title} width="600px" />
-      </div>
+      <Container>
+        <div>
+          <BackButton type="button" location={backLink.current} />
+          <Img src={img} alt={title} width="600px" />
+        </div>
+
+        <ContainerText>
+          <h1>
+            {title}
+            <span>({releaseDate[0]})</span>
+          </h1>
+          <h3>
+            Score: <span>{vote_average.toFixed(1)}</span>
+          </h3>
+          <h3>Overview</h3>
+          <p>{overview}</p>
+          <h3>Genres</h3>
+          <p>{genres.map(item => item.name).join(', ')}</p>
+        </ContainerText>
+      </Container>
 
       <div>
-        <h1>
-          {title}
-          <span>({releaseDate[0]})</span>
-        </h1>
-        <h3>
-          Score: <span>{vote_average.toFixed(1)}</span>
-        </h3>
-        <h3>Overview</h3>
-        <p>{overview}</p>
-        <h3>Genres</h3>
-        <p>{genres.map(item => item.name).join(', ')}</p>
-      </div>
+        <P>Additional information</P>
 
-      <p>Additional information</p>
-
-      <div>
-        <ul>
-          <li>
-            <NavLink to={'cast'}>Cast</NavLink>
-          </li>
-          <li>
-            <NavLink to={'reviews'}>Reviews</NavLink>
-          </li>
-
-          {/* <li>
-            <Link to={`/movies/${movieId}/cast`}>Cast</Link>
-          </li>
-          <li>
-            <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
-          </li> */}
-        </ul>
-        <Outlet />
+        <div>
+          <Ul>
+            <Li>
+              <NavLinkBtn to={'cast'}>Cast</NavLinkBtn>
+            </Li>
+            <Li>
+              <NavLinkBtn to={'reviews'}>Reviews</NavLinkBtn>
+            </Li>
+          </Ul>
+          <Outlet />
+        </div>
       </div>
     </div>
   );

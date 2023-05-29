@@ -1,0 +1,6 @@
+import styled from 'styled-components';
+
+export const P = styled.p`
+  color: red;
+  text-align: center;
+`;
